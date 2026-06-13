@@ -19,16 +19,50 @@
 
   <form>
     <p>
-      <input type="email" placeholder="Email Address">
+      <input type="email" placeholder="Email Address" required>
     </p>
 
     <p>
-      <input type="password" placeholder="Password">
+      <input type="password" placeholder="Password" required>
     </p>
 
     <button type="submit">Login</button>
   </form>
 </section>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDHGZFUS-dCT0yqxF2SmLq-eyvqf1oRkc",
+    authDomain: "virginia-homestead-marketplace.firebaseapp.com",
+    projectId: "virginia-homestead-marketplace",
+    storageBucket: "virginia-homestead-marketplace.firebasestorage.app",
+    messagingSenderId: "73864770438",
+    appId: "1:73864770438:web:9d70b798ba1707c79b7207"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = form.querySelector('input[type="email"]').value;
+    const password = form.querySelector('input[type="password"]').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        alert("Login successful: " + userCredential.user.email);
+      })
+      .catch((error) => {
+        alert("Error: " + error.message);
+      });
+  });
+</script>
 
 </body>
 </html>
